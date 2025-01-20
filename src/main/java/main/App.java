@@ -9,14 +9,14 @@ public class App
     {
         Scanner sc = new Scanner(System.in);
 
-        Animal newAnimal = null;
-        System.out.println( "Anna eläintarhalle nimi:" );
-        String zooName = sc.nextLine();
-        Zoo newZoo = new Zoo(zooName);
+        Safe newSafe = new Safe("0000");
 
         boolean exit = false;
         while(!exit) {
-            System.out.println( "1) Luo uusi eläin, 2) Listaa kaikki eläimet, 3) Juoksuta eläimiä, 0) Lopeta ohjelma" );
+            System.out.println("1) Aseta PIN-koodi");
+            System.out.println("2) Lisää tietoja kansioon"); 
+            System.out.println("3) Listaa tiedot kansiosta");
+            System.out.println("0) Lopeta ohjelma");
             
             if (sc.hasNext()) {
                 int i = 0;
@@ -25,23 +25,24 @@ public class App
 
                 switch(i) {
                     case 1:
-                        System.out.println("Mikä laji?");
-                        String species = sc.nextLine();
-                        System.out.println("Anna eläimen nimi:");
-                        String name = sc.nextLine();
-                        System.out.println("Anna eläimen ikä:");
-                        int age = Integer.parseInt(sc.nextLine());
-                        newAnimal = new Animal(species, name, age);
-                        newZoo.addAnimal(newAnimal);
+                        System.out.println("Anna uusi PIN-koodi:");
+                        String newPinCode = sc.nextLine();
+                        newSafe.changePinCode(newPinCode);
                         break;
                     case 2:
-                        System.out.println(zooName + " pitää sisällään seuraavat eläimet:");
-                        newZoo.listAnimals();
+                        System.out.println("Anna kansioon lisättävä tieto:");
+                        String info = sc.nextLine();
+                        newSafe.addToSafe(info);
                         break;
                     case 3:
-                        System.out.println("Kuinka monta kierrosta?");
-                        int rounds = Integer.parseInt(sc.nextLine());
-                        newZoo.runAnimals(rounds);
+                        System.out.println("Anna PIN-koodi:");
+                        String pinCode = sc.nextLine();
+                        ArrayList<String> safeContents = newSafe.getContentsFromSafe(pinCode);
+                        if (safeContents != null) {
+                            for (String content : safeContents) {
+                                System.out.println(content);
+                            }
+                        }
                         break;
                     case 0:
                         System.out.println("Kiitos ohjelman käytöstä.");
